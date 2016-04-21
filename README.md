@@ -27,6 +27,10 @@ MySQL is also available from the host on port `3306`,
 with user `vagrant`, password `vagrant`.
 You can re-use this user for extra databases you create.
 
+The directory `sites` on the host is an NFS synced folder to `/var/www/sites` in the box.
+Any websites you drop in there will be available in the box under that directory.
+You will need to add the correct information for extra Virtualhosts in Hiera (see below).
+
 # Usage
 
 There is 1 Apache Virtualhost configured (example.dev), and 1 MySQL database (example).
