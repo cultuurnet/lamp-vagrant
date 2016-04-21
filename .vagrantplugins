@@ -1,0 +1,16 @@
+required_plugins = {
+  'vagrant-librarian-puppet' => '>= 0.9.2',
+  'vagrant-cachier'          => '~> 1.2.1',
+}
+
+needs_restart = false
+required_plugins.each do |name, version|
+  unless Vagrant.has_plugin? name, version
+    system "vagrant plugin install #{name} --plugin-version=\"#{version}\""
+    needs_restart = true
+  end
+end
+
+if needs_restart
+  exec "vagrant #{ARGV.join' '}"
+end

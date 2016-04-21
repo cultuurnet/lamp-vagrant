@@ -1,0 +1,135 @@
+---
+ntp::servers:
+  - 'time.belnet.be'
+  - 'ntp.oma.be'
+ntp::restrict:
+  - 'default ignore'
+  - '-6 default ignore'
+  - '127.0.0.1'
+  - '-6 ::1'
+  - 'romulus.belnet.be nomodify notrap nopeer noquery'
+  - 'daedalus.belnet.be nomodify notrap nopeer noquery'
+  - 'ntp.oma.be nomodify notrap nopeer noquery'
+
+ssh::permit_root_login: 'without-password'
+
+unix_users:
+  vagrant:
+    ensure: present
+    home: '/home/vagrant'
+    purge_ssh_keys: false
+
+sudo::configs:
+  'vagrant':
+    content: 'vagrant ALL=(ALL) NOPASSWD: ALL'
+    priority: '10'
+
+apache::mpm_module: 'prefork'
+apache::default_vhost: false
+
+apache::vhost:
+  'example_80':
+    servername: 'example.dev'
+    port: '80'
+    docroot: '/var/www/sites/example.dev'
+    directories:
+      - path: '/var/www/sites/example.dev'
+        options:
+          - 'Indexes'
+          - 'FollowSymLinks'
+          - 'MultiViews'
+          - 'ExecCGI'
+        allow_override:
+          - 'All'
+
+apt::update:
+  frequency: 'always'
+
+apt::sources:
+  'cultuurnet-tools':
+    location: 'http://apt.uitdatabank.be/tools-development'
+    release: 'trusty'
+    repos: 'main'
+    key:
+      id: '2380EA3E50D3776DFC1B03359F4935C80DC9EA95'
+      source: 'http://apt.uitdatabank.be/gpgkey/cultuurnet.gpg.key'
+    include:
+      deb: true
+      src: false
+
+mailcatcher::manage_repo: false
+mailcatcher::smtp_ip: '127.0.0.1'
+mailcatcher::smtp_port: '25'
+
+mysql::server::package_name: 'mysql-server-5.6'
+mysql::server::root_password: 'aivah2Vu'
+mysql::server::override_options:
+  mysqld:
+    'bind-address': '0.0.0.0'
+    'innodb_file_per_table': 'ON'
+
+mysql::server::databases:
+  'example':
+    charset: 'utf8'
+
+mysql::server::users:
+  'vagrant@localhost':
+    # password: vagrant
+    password_hash: '*04E6E1273D1783DF7D57DC5479FE01CFFDFD0058'
+  'vagrant@%':
+    # password: vagrant
+    password_hash: '*04E6E1273D1783DF7D57DC5479FE01CFFDFD0058'
+
+mysql::server::grants:
+  'vagrant@localhost/*.*':
+    user: 'vagrant@localhost'
+    options:
+      - 'GRANT'
+    privileges:
+      - 'ALL'
+    table: '*.*'
+  'vagrant@%/*.*':
+    user: 'vagrant@%'
+    options:
+      - 'GRANT'
+    privileges:
+      - 'ALL'
+    table: '*.*'
+
+resources:
+  package:
+    'drush':
+      ensure: 'latest'
+    'composer':
+     ensure: 'latest'
+  php::apache::config:
+    'apache_sendmail_path':
+      section: 'mail function'
+      setting: 'sendmail_path'
+      value: '/usr/bin/env catchmail --smtp-port 25'
+      require:
+        - 'Class[Php]'
+        - 'Class[Php::Cli]'
+  php::cli::config:
+    'cli_sendmail_path':
+      section: 'mail function'
+      setting: 'sendmail_path'
+      value: '/usr/bin/env catchmail --smtp-port 25'
+      require:
+        - 'Class[Php]'
+        - 'Class[Php::Cli]'
+  logrotate::rule:
+    'apache2':
+      path: '/var/log/apache2/*.log'
+      rotate: 30
+      rotate_every: 'day'
+      missingok: true
+      delaycompress: true
+      ifempty: false
+      create: true
+      create_mode: '0640'
+      create_owner: 'root'
+      create_group: 'adm'
+      sharedscripts: true
+      postrotate: '/etc/init.d/apache2 status > /dev/null && /etc/init.d/apache2 reload > /dev/null'
+      prerotate: 'if [ -d /etc/logrotate.d/httpd-prerotate ]; then run-parts /etc/logrotate.d/httpd-prerotate; fi'

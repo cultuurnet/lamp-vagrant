@@ -1,0 +1,49 @@
+---
+firewall:
+  '000 accept all icmp requests':
+    action: 'accept'
+    proto:  'icmp'
+
+  '010 accept icmp packets':
+    action: 'accept'
+    proto:  'icmp'
+
+  '010 accept all to lo interface':
+    action:  'accept'
+    iniface: 'lo'
+    proto:   'all'
+
+  '010 accept related established rules':
+    action:  'accept'
+    ctstate:
+      - 'ESTABLISHED'
+      - 'RELATED'
+    proto:   'all'
+
+  '100 allow SSH access':
+    action: 'accept'
+    port:   22
+    proto:  'tcp'
+
+  '200 allow HTTP access':
+    action: 'accept'
+    port:   80
+    proto:  'tcp'
+
+  '200 allow HTTPS access':
+    action: 'accept'
+    port:   443
+    proto:  'tcp'
+
+  '200 allow Mailcatcher web interface access':
+    action: 'accept'
+    port:   1080
+    proto:  'tcp'
+
+  '200 allow MySQL access':
+    action: 'accept'
+    port:   3306
+    proto:  'tcp'
+
+  '999 drop all other requests':
+    action: 'drop'
