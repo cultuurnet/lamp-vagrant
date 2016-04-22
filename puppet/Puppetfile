@@ -59,7 +59,7 @@ mod 'nodes-php',
 
 mod 'cultuurnet-cultuurnet',
   :git => 'git://github.com/cultuurnet/puppet-cultuurnet.git',
-  :ref => '2a896d6'
+  :ref => 'd8c5da0'
 
 mod 'cultuurnet-cacert',
   :git => 'git://github.com/cultuurnet/puppet-cacert.git',
