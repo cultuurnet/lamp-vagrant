@@ -12,11 +12,14 @@ mod 'ghoneycutt-ssh', '3.24.0'
 mod 'darin-zypprepo', '1.0.2'
 mod 'rnelson0-hiera_resources', '1.0.0'
 mod 'thias-sysctl', '1.0.2'
-mod 'rodjek-logrotate', '1.1.1'
 mod 'puppet-collectd', '4.2.0'
 mod 'puppetlabs-inifile', '1.4.2'
 
 # Modules from GitHub
+mod 'rodjek-logrotate',
+  :git => 'git://github.com/rodjek/puppet-logrotate.git',
+  :ref => '89ee645'
+
 mod 'puppetlabs-concat',
   :git => 'git://github.com/puppetlabs/puppetlabs-concat.git',
   :ref => '2518958'
