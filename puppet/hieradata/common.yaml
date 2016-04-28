@@ -121,7 +121,7 @@ resources:
   logrotate::rule:
     'apache2':
       path: '/var/log/apache2/*.log'
-      rotate: 30
+      rotate: '30'
       rotate_every: 'day'
       missingok: true
       delaycompress: true
