@@ -49,6 +49,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.define "lamp", autostart: true, primary: true do |lamp|
     lamp.vm.hostname = "lamp.dev"
+    lamp.hostmanager.aliases = %w(example.dev)
     lamp.vm.box = "cultuurnet/ubuntu-14.04-64-puppet"
     lamp.vm.box_version = "1.0.1"
 
