@@ -5,9 +5,13 @@
 :logger: console
 
 :hierarchy:
-  - classes
-  - common
-  - firewall
+  - "%{nodename}/classes"
+  - "%{nodename}/common"
+  - "%{nodename}/firewall"
+  - 'classes'
+  - 'common'
+  - 'firewall'
+
 
 :yaml:
   :datadir: '/vagrant/puppet/hieradata'

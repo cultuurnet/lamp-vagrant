@@ -87,8 +87,6 @@ php::extensions:
   intl: {}
   mbstring: {}
   mcrypt: {}
-  mongo:
-    package_prefix: 'php-'
   mysql: {}
   sqlite3: {}
   tidy: {}
