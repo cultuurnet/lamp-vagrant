@@ -2,6 +2,7 @@
 classes:
   - apt
   - apache
+  - apache::vhosts
   - apache::mod::headers
   - apache::mod::php
   - apache::mod::rewrite
@@ -9,16 +10,9 @@ classes:
   - ntp
   - sudo
   - cultuurnet
-  - cultuurnet::apache
   - cultuurnet::cron
   - cultuurnet::file
-  - php
-  - php::cli
-  - php::extension::curl
-  - php::extension::gd
-  - php::extension::intl
-  - php::extension::mysql
-  - php::extension::tidy
+  - cultuurnet::php
   - mysql::server
   - cacert
   - mailcatcher

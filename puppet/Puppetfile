@@ -6,19 +6,23 @@ forge "https://forge.puppetlabs.com"
 mod 'puppetlabs-stdlib', '4.6.0'
 mod 'puppetlabs-apt', '2.1.0'
 mod 'ghoneycutt-common', '1.2.1'
-mod 'puppetlabs-apache', '1.5.0'
+mod 'puppetlabs-apache', '1.11.0'
 mod 'puppetlabs-ntp', '4.0.0'
 mod 'ghoneycutt-ssh', '3.24.0'
 mod 'darin-zypprepo', '1.0.2'
 mod 'rnelson0-hiera_resources', '1.0.0'
 mod 'thias-sysctl', '1.0.2'
-mod 'puppet-collectd', '4.2.0'
 mod 'puppetlabs-inifile', '1.4.2'
 
 # Modules from GitHub
 mod 'rodjek-logrotate',
   :git => 'git://github.com/rodjek/puppet-logrotate.git',
   :ref => '89ee645'
+
+#Temporary fork to enable apache php.ini configuration
+mod 'mayflower-php',
+  :git => 'git://github.com/willaerk/puppet-php.git',
+  :ref => '2af3651'
 
 mod 'puppetlabs-concat',
   :git => 'git://github.com/puppetlabs/puppetlabs-concat.git',
@@ -48,21 +52,13 @@ mod 'puppetlabs-git',
   :git => 'git://github.com/puppetlabs/puppetlabs-git.git',
   :ref => '4afcea8'
 
-mod 'puppet-icinga2',
-  :git => 'git://github.com/icinga/puppet-icinga2.git',
-  :ref => '2f37544'
-
 mod 'puppetlabs-mysql',
   :git => 'git://github.com/puppetlabs/puppetlabs-mysql.git',
   :ref => '9f5539c'
 
-mod 'nodes-php',
-  :git => 'git://github.com/jippi/puppet-php.git',
-  :ref => 'cb1aac2'
-
 mod 'cultuurnet-cultuurnet',
   :git => 'git://github.com/cultuurnet/puppet-cultuurnet.git',
-  :ref => 'd8c5da0'
+  :ref => 'd1c5e8d'
 
 mod 'cultuurnet-cacert',
   :git => 'git://github.com/cultuurnet/puppet-cacert.git',

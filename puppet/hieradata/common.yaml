@@ -27,7 +27,7 @@ sudo::configs:
 apache::mpm_module: 'prefork'
 apache::default_vhost: false
 
-apache::vhost:
+apache::vhosts::vhosts:
   'example_80':
     servername: 'example.dev'
     port: '80'
@@ -56,6 +56,57 @@ apt::sources:
     include:
       deb: true
       src: false
+  'ondrej-php-trusty':
+    location: 'http://ppa.launchpad.net/ondrej/php/ubuntu'
+    release: 'trusty'
+    repos: 'main'
+    key:
+      id: '14AA40EC0831756756D7F66C4F4EA0AAE5267A6C'
+    include:
+      deb: true
+      src: false
+
+apache::mod::php::package_name: 'libapache2-mod-php5.6'
+apache::mod::php::php_version: '5.6'
+
+php::globals::php_version: '5.6'
+php::globals::config_root: '/etc/php/5.6'
+
+php::manage_repos: false
+php::ext_tool_enable: '/usr/sbin/phpenmod -v 5.6'
+php::ext_tool_query: '/usr/sbin/phpquery -v 5.6'
+php::package_prefix: 'php5.6-'
+php::fpm: false
+php::dev: false
+php::composer: false
+php::pear: false
+php::extensions:
+  bcmath: {}
+  curl: {}
+  gd: {}
+  intl: {}
+  mbstring: {}
+  mcrypt: {}
+  mongo:
+    package_prefix: 'php-'
+  mysql: {}
+  sqlite3: {}
+  tidy: {}
+  xml: {}
+  xdebug:
+    package_prefix: 'php-'
+    settings:
+      'zend_extension': 'xdebug.so'
+      'xdebug.remote_enable': '1'
+      'xdebug.remote_handler': 'dbgp'
+      'xdebug.remote_mode': 'req'
+      'xdebug.remote_host': '10.0.2.2'
+      'xdebug.remote_port': '9000'
+  zip: {}
+php::settings:
+  'PHP/upload_max_filesize': '12M'
+  'PHP/post_max_size': '16M'
+  'mail function/sendmail_path': '/usr/bin/env catchmail --smtp-port 25'
 
 mailcatcher::manage_repo: false
 mailcatcher::smtp_ip: '127.0.0.1'
@@ -102,22 +153,6 @@ resources:
       ensure: 'latest'
     'composer':
      ensure: 'latest'
-  php::apache::config:
-    'apache_sendmail_path':
-      section: 'mail function'
-      setting: 'sendmail_path'
-      value: '/usr/bin/env catchmail --smtp-port 25'
-      require:
-        - 'Class[Php]'
-        - 'Class[Php::Cli]'
-  php::cli::config:
-    'cli_sendmail_path':
-      section: 'mail function'
-      setting: 'sendmail_path'
-      value: '/usr/bin/env catchmail --smtp-port 25'
-      require:
-        - 'Class[Php]'
-        - 'Class[Php::Cli]'
   logrotate::rule:
     'apache2':
       path: '/var/log/apache2/*.log'

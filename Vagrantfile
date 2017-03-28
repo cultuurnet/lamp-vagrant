@@ -7,7 +7,7 @@ Vagrant.configure(2) do |config|
   config.librarian_puppet.use_v1_api  = '0'
   config.librarian_puppet.destructive = false
 
-  config.vm.box = "puppetlabs/ubuntu-14.04-64-puppet"
+  config.vm.box = "cultuurnet/ubuntu-14.04-64-puppet"
   config.vm.box_version = "1.0.1"
 
   config.cache.scope = :box
